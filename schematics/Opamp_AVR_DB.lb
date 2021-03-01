@@ -1,0 +1,211 @@
+.SUBCKT Opamp_AVR_DB 1 2 3 4 5
+*#ASSOC Category="Microcontroller Peripherals" symbol=opamp
+*                     | | | | |
+*                     | | | | Output
+*                     | | | Negative Supply
+*                     | | Positive Supply
+*                     | Inverting Input
+*                     Non-inverting Input
+*
+*
+*
+********************************************************************************
+* Software License Agreement                                                   *
+*                                                                              *
+* The software supplied herewith by Microchip Technology Incorporated (the     *
+* 'Company') is intended and supplied to you, the Company's customer, for use  *
+* soley and exclusively on Microchip products.                                 *
+*                                                                              *
+* The software is owned by the Company and/or its supplier, and is protected   *
+* under applicable copyright laws. All rights are reserved. Any use in         *
+* violation of the foregoing restrictions may subject the user to criminal     *
+* sanctions under applicable laws, as well as to civil liability for the       *
+* breach of the terms and conditions of this license.                          *
+*                                                                              *
+* THIS SOFTWARE IS PROVIDED IN AN 'AS IS' CONDITION. NO WARRANTIES, WHETHER    *
+* EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED        *
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO  *
+* THIS SOFTWARE. THE COMPANY SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR    *
+* SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.     *
+********************************************************************************
+*
+* The following op-amps are covered by this model:
+*      Opamp_AVR_DB,Opamp_PIC18_Q14,Opamp_PIC18_Q71
+*
+* Date of model creation: 9-8-2020_2:02:25_PM
+* Level of Model Creator: 1P02 / 08-31-20
+*
+* Revision History:
+*      V1.0 - Initial Release - RW - 07/01/20
+*      V1.1 - Release - RW - 09/01/20
+*      V1.2 - Updates - RW - 09/08/20 
+*       
+*       
+*
+* Recommendations:
+*      Use PSPICE (or SPICE 2G6; other simulators may require translation)
+*      For a quick, effective design, use a combination of: data sheet
+*            specs, bench testing, and simulations with this macromodel
+*      For high impedance circuits, set GMIN=100F in the .OPTIONS statement
+*
+* Supported:
+*      Typical performance for temperature range (-40 to 125) degrees Celsius
+*      DC, AC, Transient, and Noise analyses.
+*      Most specs, including: offsets, DC PSRR, DC CMRR, input impedance,
+*            open loop gain, voltage ranges, supply current, ... , etc.
+*      Temperature effects for Ibias, Iquiescent, Iout short circuit 
+*            current, Vsat on both rails, Slew Rate vs. Temp and P.S.
+*
+* Not Supported:
+*      Some Variation in specs vs. Power Supply Voltage
+*      Vos distribution, Ib distribution for Monte Carlo
+*      Distortion (detailed non-linear behavior)
+*      Some Temperature analysis
+*      Process variation
+*      Behavior outside normal operating region
+*
+* Known Discrepancies in Model vs. Datasheet:
+*
+?@@--START ENCRYPTION: "MICROCHIP Opamp_AVR_DB Encryption"
+?@@K6jV8cz+7ytaXqL+Puq46p1vdgCkNh8/cEzA69PCcWEv62qg8YmwH1f3DW8QVGiTj94b?##
+?@@hKZ4qZbqH1cg5m9hd9SM4BXtbioj0jIV20dFA7UXqAdCMMNhNIQMTePfFnpyJ+NeG7Y+?##
+?@@WTQ90wLelc4hnlguxyFqBpwKgQyP31wwpHEZOeHlOkMtPzSL40qYviHtalIlgnbaniij?##
+?@@KqDbnKbs1YHjeXJvX0NVuYg9SdPqa278vemqu8Cn1oEPrUWQn8B7RsT+vwjnSiEPD62N?##
+?@@b/EAbnvdX8yF17j+uCbz8naTgxFMyz2Rt1pZxeaOgamLSYN2wZu7T9eeLVmNBC9+oYcW?##
+?@@wKoKZG5/eP6nUtRPqD4sDUdhC4KQE6Lv/+N6U63vGbmXH2L+RbIypBb8x81RAgTP2ozq?##
+?@@CYRlOKrr5qT5DiSpRDewSPQu1TMcRkKzEt2JpRjMaIR80kNfFyB3J0j/v6NTsempKJgu?##
+?@@WjxvLnt1RQs+ByD98bBWpsFzGzE9dn2qyCr+yGVEfuj7u0bRG1CVVmWXTnWOOKvXXdQw?##
+?@@R5kEn+6zhLd8CwyRDgl4126bSC8BVOFpT2Rh7Y8i512ivnloXtyDLy2y9+e+r6szxjz6?##
+?@@KI+06/fCwMgktcNzCn7RpWrE27qy0jQuhmtrv7SlttMEOOMxOkrsGI8rfq1bXwKmM5CJ?##
+?@@beDava+AMcVVkPSTQ9L0qgJ7NRiNJuu9jTKD7hmuxrkcKcKSgVTzWVuB9JDF/EOSBuGI?##
+?@@FvRdtRqZnYe3JlUFTEXv9C/CoMhQ6UWJTRM1qrB81KU3SsYCKwSdI7VDPgEdrueYpBaa?##
+?@@dzaZMbg7l68utUmrOnxQT/9+Wv91nJl+epQ9rftpPmXFDKBjS5IrjpIhOTgYEoG/xwOM?##
+?@@0DM86eJ6qPS7ZHMCsUZEowF5rSA2/eldWID9KZflcP4FiQ0cktXtAYXbvxVr9aRmKZpc?##
+?@@uW2F+UZY2/gAmZCMTj06h0jv9Ds7TcAGFViYw4o2hX3+HDT+FMZJDgjdgDeqc374V3hD?##
+?@@unaYUW42AQRQ1yeSBUzWxu1bdRDL007mhoxbf7+Sy4fiHhnZv7ZfZjbXHeRy254CQb+N?##
+?@@R5kEn9ywzkDzMWlApfJcmO6fjv1Zbh/GjblYhaMLv9NDjh9jZhwTHlE8breWdmDCyZ6z?##
+?@@kA120oD3Iimo48b2MTkREQ8DgQ6CpN96AtSYGic/maOeu+jfzmo8Iz/mgRUzO1yGhUfv?##
+?@@Ue/DEodAkeOepo9CMqgrbCe+/obP2vKOOCy+klffZuCpsvhQ873uvWp7TEYHEIOaNc6+?##
+?@@lkDo5OKiubh059NWh6OILewVZVa2VwvONFCBOSc8elQn3igQgmnkuhqiij7weEUbak3K?##
+?@@w8NEbeuqc8nxPAcRDCAkJd5QE0W5z7A8QcThZVeMwQImC+BXdtbCwrFCM3iQyFQrqB1K?##
+?@@LLEBTXN+phmoHgDj4dbZZEC3zYLgWKuxSbqXXQ1qVgnPV3W40Oya6svRVNUIw9of36qj?##
+?@@SaoqUBnqQHRi4Mr5LGCJ6Jw59pDpdlnIMsNp2MyMJIlq9kF8QI8WO4jRvsuWiJJsij3i?##
+?@@elDSOk5udM8Orm4QtFpWFWYcalaJbw4T8K1kVNxkRdzXoXpsIi15oScRlPbaipBvS3Qs?##
+?@@R5kEn1ZyBcWrI6l0YqLCjjKSMqXC9t8bn1R1/MExoVzRa6icoaBtWsYwYBKdorA2ubET?##
+?@@JGxoin9apj3e4RXxCpqtCoOb+VaYOGYuvVFOtNRkg8V+jzm4den10Rw6BaOVBzp/FuNr?##
+?@@3aM0ZnPdj2rwwlaAjVJcHvZ2mvp3fzLKwDrtcF14cqHSpw8Est/mjPzLA17hkywn7v1z?##
+?@@kh6cg6kA1cdrqbE/KZODep6HKHcIGagrxHb6DGLhQU4KyFNrtzBOvlnZA6ny3WsQuriu?##
+?@@6xs/OxRrGQbb3A/Im6NPBOu7dD1G+Qdjq4C7AgxI7ipG6+Av528pX3cXR0ebCnl0ugLG?##
+?@@TMRkWfghrhi81Z8mLc7jooRJtD4b4+udLOU2akaJ5e2p5rEks2odB4O1UWMp2qOzPapa?##
+?@@beDavTg6NXpZCVzFOWMOoi3dBQ8IO0RpSx1qsiqQxV1iKnmrig0Dy115j8aNduzze7Qd?##
+?@@xt19dr78GCxGcxUk1a9c1Azcp+BdYS4KYkE0lJLMxOm0LtxZR08urStc+44Nufi4qnBj?##
+?@@UwDpwzPkTzr9taJKABsSLTXiPuRyq8bdWr4OAsBQgXNfxJAkqV68/aCEkMyIrRBJNFpi?##
+?@@ADe5HcyWs8v5BJhqKl+5XaCBaHjrMPTc0H38QXewDvp4hEdNh31fCul4xqCS/uqYn+FB?##
+?@@3aM0ZrnAqGcIZbl457bBw8P/AHmqZz4KQc/YNJnmFN6IYWXo7/f4f9wycRcRXhFAEeoO?##
+?@@GhapFu1pr2t/aG5mDYMgZu0IobP256WNNzJhSD/gkIlmH6DRHMfkNUflU9Ka46R6+DnE?##
+?@@cxNMzzs/6OYy8qoE2uEhoXc3pis3Onep4KoeymtGbVhwW1iKhEKG5vXjbbTHfb+BUKl6?##
+?@@9GnrVxhOWDjG/rmNIP3w9jl2PtY6PaXwo8bV8CEEPw4BDaQf02aVQxGCcrsILNIwDahK?##
+?@@AT/MdZiou1upbZILic8Po3/8Wldq1nZUMxNNKETNQIW2CDHaZyL72rWJoyHEyo+j1uDS?##
+?@@7jV5RL89PZzpGRDdwfMul64XmhKsxEhG9VnehtvQUCNp7bWzOXL84L5j1m71Q8V+0MWo?##
+?@@l0n8PDaB5PCTkmolXbaFCf+KLsFW2OXlBDva3vda0Jb9WA+RlFqe68aN3AoqI8cvNk4X?##
+?@@lC/CMxhzjkxz9LLcnqpd58EMtoP3J2OrGJlh+1PabEmg2jfynyuAcxAMOGPJJDJVQXWN?##
+?@@0TxPQhxEbOaMQg2pOk8Y/1b11q5muQRfTp7r3OKJgF4DAQFaecdEhsSsBeRDzz+cnpXS?##
+?@@wrswFNfxILs5cZPmdk6+hCNJCcHBdubaXw3BxqvxGAuLmOiFURcM2vugOjcjmj7G67/2?##
+?@@M+2Gt6QHYc2QdhbSBRuHu+Y2dTMKGw1895pKYxTOu+egrSZuGzDzoShC8Nkm2rYenL+7?##
+?@@qNtAG0VAC0hhGvyoPceGnsD9U6RNigUthYWEvFnDzMc4JoAyjuJMxz1q7SloFlfnjAlZ?##
+?@@ZZtB+r2aLdbuqPUa6oiHgK5KTAxQ//58BZE0VJ9/wdjFR78gf/oxB97Kh90kZBKFUxku?##
+?@@ziIWOdERCzJaon6GRh2u5t3hFF6DQJxCC2xL+bWAOKLyTvZ0kwpCOADRbgUCZZvxA4F9?##
+?@@NxDTGf31+ovP4aUNQjFFUXep9dyVwyCFbq/i5muQ20ITRCCxm4QBLE4hEp2mWTs+4W7Q?##
+?@@4L1tb7CRrhObxHerC2HHGwu0+QRsQn9CcheakdB9VreCtf80Qfvjf9u0vhcZ1qtVqaR3?##
+?@@YXn1mEgZFeiuJ0njjShWIStdQ6CB8bTOp2Hu9/+rkksXiYskPZ2V79M2zn1/yd0D0wxF?##
+?@@psoaasa23SaxNEiwei3t3HmoKI42DGEZTzAhDDW+QDL+oP9xXeztechVGydh3qL+d6lk?##
+?@@v6H3C0VlaDYc6Son7aJQ8AXGudZtL7yuSdPcYFiXGH9FDj0Pho5pHw8BIwmJrIZPK7A9?##
+?@@3JohDtP5thfwkWtPNp2F0vrOlQMxp01EjvdCqaLeyW9O6hgr2Oa7+n0gGuYqOcQ1s5Qc?##
+?@@uW2F+XPxtVnvET9AQmlAmG26UWa/TC5ctkY1xhv+C32YPDNnYyQF224+Xi3/KJ16Dmls?##
+?@@YoEI8ee8nbhd8AsIpCD5E4PnqhLgaGCYMp7+v+A7gCboQn8lTWrbzVq20Ujyg4nXS5oZ?##
+?@@OzIfekU7ZCryqgeD++6N+0OeF8wYd00KGlffON0xL4ukWyPnJm72lDcOv1VKvrvDWcYI?##
+?@@mFIPlUo7l+WpWTWMTTbkn/5TYisqlDMH7kYwJVnmaHBhvWhFETrzlTGti96Fktmldsbw?##
+?@@VREQdEAbcv8sE5agNNXt8VBKTc3PQCurYwqzMvxnO0MkH6uDppCRoX5pVwFDI+gXuELu?##
+?@@bujtFdwGwQDBv3oRTYL/fVjjVxdIS+GMzDhc8erTN7E67fWwPXrmz3/r7pxail5x9iz6?##
+?@@a8+0DLUGa+0yWJT7MzSdwq+LS1F3ekLzWnfp8NYBTe4zMw0SzTY/0tEVg7zRSoe694Bn?##
+?@@XE6V33jqQBAFAC8VMGm2nUc41mUPeuKtJ1QhHa5BnlACY2Gvzlch9vshBFNapUaaVP1Z?##
+?@@1V6boy212pIroPFmaMzlEmHkSBWFr/79Opqnl0RIwL9JaCdgh7ahff67mx+iOw0ZEh3A?##
+?@@9noRBzMyDz8WrC1g0ub0tgYz16aKkpH7C3xTjNqV2zt/LhHLyV0JTuWGrcAOk7XcGlJk?##
+?@@n46U/+n7Zzwnaitv7ySjZ+K4r99sYN2MnZrl0rzWDSRijr7S7rbhFjTBaSPKO/A5f3UV?##
+?@@/K2EGnEjgD+o0wE23BQNF8dxTUCkU/GnXIYMSZrgRdBJ/A9fusdCa8IhqE/soqmVLKz+?##
+?@@/baXcje7mdFf3L+WMoOur0QE7RrsL8C4IxseYYcuQjtu6m6oMJ4Eq+kDbRUEQ/gUuy3t?##
+?@@4s6TIGOeP2+OTvO4zU+5lPRr2B5kvppkcfMq+jiQLwlPBB6mWovjcsqbIgX7tBTAvZa3?##
+?@@Q3e4PSWE65vzPMm84Q0+/nETq9su8dAKzLhy/9GUg1OGCdsKrwrHpXW21Jcf50m7OgRr?##
+?@@DJ6eQThnnmlBSJ5eLXuEFZtrxTvndekPl7aHc2tRs2a8FBqEz0tFxI92TiDN/n0IU1xN?##
+?@@Tc13sbfrkq7nkxMs1AlVqnhpa5voxXoJudYLAPeZpZGT+/4aTKnjaGg+6SkV/BhdMSa+?##
+?@@NgfAwdGZEOVrmGIkMcTgSDzCIAH2KtnPMdcscNfrx9Q/DCyYhmiRmCV9T8amnD4qbo7x?##
+?@@5/nz2o1np807VVoPRfqMI2Dch1Rtg+cjHxNustyE6sJJIZeoS/cOw3KfCDGAei+O0Pr+?##
+?@@CHtR4JJUxFY0p1Lk+pUhPF4BeYzmIvQJ0ztHqCmWoKRbieU5NzccxYs4HP6QVhVRjB4n?##
+?@@mVoi7VMNNhWGN8Ex7ONS7D52pC7HVKjf18JB6ZTmqnKnNh8Bhk32ksEtnEDFBesbZjPD?##
+?@@UvjWa8KkFztW0jDmEyds5Kw73ZO1Nowq2L2SvaNSKiQ7lja5AkUv0+gnyNnEMb0tJR0X?##
+?@@cxNMz+fkYQa6S2615Awt6gUDeuMzignh7r22BpJ4UaOLP/vjMqnLG+HTD3cq4Uiz3I7e?##
+?@@lC/CMw39HUMgopC9crqcxDH9NbR6GFhEnYqQWHfLXLEKo1nK5z4QkEthy1MwwQUmSMc+?##
+?@@2YHoBZuvOdlkL92kSFOruwIjx+fkD295T7Ny86OhNzOuYeEdH61MAfIYYpbimiXp+NNB?##
+?@@GhapFmwC4xCdIuJgcxrQ0IdmeHHjaOqnYBH9PgIMcescSTxpr1D1Lq85qNeJ7LJmbbjv?##
+?@@h7/KtrrgIUAmVLYbNcSjAm7YWQ6GiE410ijlMdp+yvGHUkxeEx+ub5t6wyRboiG/kOsX?##
+?@@3JohDir3y5I2gFwAFu32uppQJv7WVGbFXKGxpzJtd5ppjQ/+fbN5jL2adGWfS5RWWCpE?##
+?@@JXV74iwzRMJc0pUA+050LpJF8c/YWrGndcwCCVCn9ltGt63FA5qdt60dlHfrSWlU6tw5?##
+?@@YoEI8dh5X2WOsFJtTLSjHZpbgfyTdBgQedOMseXR2ssd7gVDyL346lOAILsVsWFdhITt?##
+?@@5/nz2umo1P9YkTxyOOepFdZ+MHxW+x+I/1lBLCKHpn3S3AAoJrYOVWW5l+EXMrm0ZSSl?##
+?@@9GnrV/7VW8j1//6QO6owkH36x99WAW4fUnQEpTSmdChm2dyB6/3nFaAsVgjRBV48cjYk?##
+?@@ha6kBuav/UIb3scVDzRMbdCCv9cV2TQuQDXY08KdhMeHzgsKnNcIEcKJKnfS1gQRu3Da?##
+?@@vpjks3SUulWrOK7WOhHhU4OGs2nksSoqj0ySdaGOrYtqzi+vzz+vUwY6fNuTkisGXdLG?##
+?@@E9ojrEjDJjc6C9AjjDlD88WqGeGB9RgaKov1oplIh9CUVcuyHp4GTB9zltJUYLFENPrM?##
+?@@GAWDZYt4quZ2GE3nvGRtRm3lDf7m/cLRdEbRCscvHBCps+orUrsQqDCi3ORccRvYd+gw?##
+?@@JXV74qy2CEvkNZ+aHNhMgr3HYOZjo1yg2h8H7JMWwl9y2+s/cVbWbBACaJSAvbHxo6cC?##
+?@@RpDxRlFDDYn76lkQkYNVO4uj9xvSahppMtm6lwikiZWUCHVZt4RYjlwiTW62ryfeAcIQ?##
+?@@37RaFzyD/27JHpm8vUMfWmWfHYbML7yUlG6EUnlxX3z6XcscqgUvDOb4TZRWmRlrWw55?##
+?@@RH/LlmmdCz63PIuWZYn70SJkgAaoiUmx9pVotpQXKFYAdEvAQePEbPQ2ACR7TRJewl5B?##
+?@@tUs4l/6+FLaoWzg+IpyvNS8oYP1J7qZWNwQMnGwI1m8hfqzyutga9qnGdk35xYgW69om?##
+?@@ZqRUUtunOtufFCm9XMWCnxD5t2eeigQr5Q7i+d9n/+7gZw5vGU4xMem5sNL9YcJAKxx9?##
+?@@Q3e4Pd0gTI12FNffM0trWbKsnu0hGpNxp6nrx6aQ8qsSzxgrHbrP0OsxYdpLj105r/vy?##
+?@@JGxoigidv545luaea7bON6YeJygySDKQAACQSAd7wrERQmHwT/8kbzT1KSF+1p1RUair?##
+?@@DaaxmboHpeECTt7+VSZoZTJFGNRwesQ+E8+3/sYveNeTMy7Q6Gl/ijsoHjxmV3XsijFG?##
+?@@SrM+qHRFUxOnT1d99jrAjQv6fJSPH/DJnNk//rClY3l3pl72Ix0fXoWOP5MS+AiQfg/Y?##
+?@@VyM2JchHtg/gTv5NdcI++QBJsi9SU8oZdya6QT3imp9tpfw0VduI+Jl9LQuf78eDGlat?##
+?@@YHDiQOlefcE5JRahqe8XfdrINORHyw5+s3AIVnKKJcsAQxYCszTaoWtNlkEweMqhzSwW?##
+?@@uW2F+XUtoIgtjF0ljqQZ2DrSfTuHbEC1Gj3bMdfyUzy6uPX7dDQ6sgst89Gh1IfGShIb?##
+?@@PkxYgzzvTn2ddmv7weotHb9h+ze52nwe3cdVyco/jw6sJB7CiWk2foh2chDFZYLGao5L?##
+?@@I2RVMcdHGa+Xkk1+Yp/LPdM75tMb/LcPS1eWJijTmvPp4qOY7weGlbsueRqfCMjxttMq?##
+?@@HCfPx2wlcV/OlqeGfWrAkM38Mij/AOLYqz1YB83ADhL+gNhoP8QufK6qnkwG5mYfZRv1?##
+?@@1V6boyEqm28vks3iGXZsckII6HzrZWR4Ee93c3F+j0aDIuh/F2nKq02AnaxBRvk7z5qg?##
+?@@fnIem6hOtISnZDmfmlm1y1e4vCBA50x6zxhWrvwqn3wZPQ+RjAcyDa2210OA14WMAGSl?##
+?@@NxDTGYxdlnJRTNSdlQQwP+pVYZUOi/zzv56YmVQN7PkAObf4DMTSXYToRTx87DIbAeKI?##
+?@@qNtAG3R9xiI4Pu+7/vuS5y5ftb2WVBd9NZ/lXp/WGAH7JGRefg3OM4bhMvRmesIXM+br?##
+?@@Nf6taGvyZZw3o2AorQfkluY/sNZQdkXWVl/G4d1RDGRwvWrbJx6mkGLjgFhErZ7p11jr?##
+?@@MuVzX3VsX56uHPXG85Y0zTcfr4G/VBb+DOgtQXCkITPgzWQ4GwsdnEpBsbYWZ4pn45I7?##
+?@@e1jlktm9rNE1n/or7HnFCmdyrSETKTZy0tz0pspJrFCSiWgx+6BQh1avXXN68cP8LDCs?##
+?@@cPoTxkq60xG51qyJbJ8/M/jA1Bl11IzFZUKs4/EO7/u4JdxyV0whjlBbwvPFr3iMS8my?##
+?@@0TxPQhrnaMmP3cS5kNouPcHxfq4jJKA9wJ0GciQQUIeH9TtovzDHqIORqDkZnWOpQYY0?##
+?@@2on7XdWuNFhHrXNuUWqvPgpV/YbTdUG6iynLFkWerJlecHXLsIma/vbyV8R89rHT/qap?##
+?@@82DY/oAJHB+iRrNNdHo/MIxoQVn+LKu0gGQqzbzLfqM5+lC3FJmHc1GPdY9ncOtgyCfz?##
+?@@PDsy03lNHRNvzgM5QThOBywvUwdcDB0itCLzMuyJtaQv0YG6O+UC4434KTSjY++BrQsO?##
+?@@wbIdvO9gU3Nu+9og0da3hVCzsCuNAhmhF4etVNCdqoFToh+/LVBFH7kcqE4/nGlLSJLf?##
+?@@5vDggn0a3zO6L2SBDzdoSfZl5pFtZHxYdu9gs81T5y+dyw2oV/xZAjDoClZviewJEeMV?##
+?@@m2tIng8lENd7xrgqarzLSkNn65JvlhGup8BuJZ0MUMt1oBwkHCifgMhAI5HL0kxEkYG1?##
+?@@IEocKLTxkOKV1SFRg2KxB79Kd4iHh60i2kuzOkkcxpilxpvaHnmjxaCjXcCFe8tZw7xP?##
+?@@cQImHuJLttf10kvwS9KKKSHQMRA1JmZjSLhUT2VY8Tn2ztURw1bY//ephetQzrOM9m0O?##
+?@@sjH/jr21UYzE0gkbFHeM9BwJIQPnsx2Knf6n+cc6zCdduTflZh/9KeVLqGamYtnHU/Dh?##
+?@@u3+rqvV+YfKIrrEyDxi7orLdAavwywMxb1QdbX8/P9B0oD4G+YWKUD12DweqA53RHgxM?##
+?@@9GnrV905iidgJb2zX4iuAv+Aj1Oyg0bENjrEmGJwBirU0YtIgu7ugsjD0RdcTJszTNpc?##
+?@@RYje7mUpvgsBSqj9IqR9u/YmWZFikNrWW9CGqIDdooFDxK3DKDHHwUYGXlVMvuQoYzJA?##
+?@@8lfFpo6wdNCxqDkQTJud9J4ogAjaXMvXs2RZh+JvKrPIG/vdcL4WbT9XKqDnqvOOEJSi?##
+?@@X2fO6MuzOsxENpANoVkXxVyYbxOgdU4nsI+fAB0/uVqWG7ws4TO1DGVM7cZzrQbYv0yO?##
+?@@4L1tb1MHiGlBoP7QoAxAkx/oca+0+Ve177DdxS0CzbuElfGi0EpeVzY7RxOnL7Gylpba?##
+?@@tUs4l72iBpIOXyQe91Onw0ToOL3MK8gIH7uIZryoQX0xbnSBegHbcF2gGwMhHOfvdUMY?##
+?@@EtEQU8SIKPTHQLC7VbfQJVIhMg5qsgLyQjkcwjb9fMlf3Ezicf+GedsCbKoAlVOZFbd8?##
+?@@R5kEn+y0TzJYrPLDBXBEvHl08ZDgdvE4RvvHNrOo6fKMrmCYRIpPIKCxS6hykU/gHEpm?##
+?@@ZJIuor1exweo7p27kNP/8k1z8RBKGeb/SlLihbzlbiAYgbQamEWfV5r846qjeF67WgaS?##
+?@@mVoi7ZkY/bkjmCYppcq2uvm7FoohlpjpR02TKLwjA3RrupdekM1p+CWU4JGmpc28XjRF?##
+?@@oqjOCGEmpbyqYzixE1MRbIPms1GoSb/Q2dneK5+ShPTbUl5XprzQ0TsRI1JodBx/fkn+?##
+?@@J4ahk3GhqlmYH6cRix5MPSiaA0Td+3BN3u/j2yOKDXiTI9CfKtg2/0ekUs3N4vuUltxg?##
+?@@8Eaf9RcFa2TUO0ysv6+gpVRRmVW0ZYhgh5DlC+Xa/RoGFxxkMf+L83jBOTkd4+8Oh1gB?##
+?@@Ue+5Eh6ayl50s4sEnTeDlCdyr5vDqZxWK0VCjsulOEoZWxWHIH131aOLOQkLFht/bzGB?##
+?@@--END ENCRYPTION: "MICROCHIP Opamp_AVR_DB Encryption", 141 lines
+*
+.ENDS  Opamp_AVR_DB
