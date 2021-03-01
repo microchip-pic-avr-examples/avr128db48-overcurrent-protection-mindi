@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mindi-debian
+spec:
+  containers:
+    - name: mindi-debian
+      image: artifacts.microchip.com:7999/microchip/citd/debian:1.0.0-stable
+      imagePullPolicy: Always
+      command: ['cat']
+      tty: true
+      resources:
+        requests:
+          cpu: 1
+          memory: 1Gi
+        limits:
+          cpu: 2
+          memory: 2Gi
+    - name: python
+      image: artifacts.microchip.com:7999/microchip/citd/python:3.x
+      imagePullPolicy: Always
+      command: ['cat']
+      tty: true
+      resources:
+        requests:
+          cpu: 1
+          memory: 1Gi
+        limits:
+          cpu: 2
+          memory: 2Gi

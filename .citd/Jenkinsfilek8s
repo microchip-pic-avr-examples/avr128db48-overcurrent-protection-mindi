@@ -1,0 +1,121 @@
+// Mindi-v1.1.0
+
+pipeline {
+    agent {
+        kubernetes {
+
+			defaultContainer 'mindi-debian'
+            yamlFile '.citd/cloudprovider.yml'
+        }
+    }
+	
+    parameters {
+        string( name: 'NOTIFICATION_EMAIL',
+                defaultValue: 'MCU8MindiContent@microchip.com',
+                description: "Email to send build failure and fixed notifications.")
+    }
+	
+	environment {	
+		SOURCE_URL = 'https://bitbucket.microchip.com/scm/mcu8mindi/avr128db48-overcurrent-protection-mindi.git'
+		GITHUB_URL = 'https://github.com/microchip-pic-avr-examples/avr128db48-overcurrent-protection-mindi'
+		DEPLOY_TOOL_URL = 'https://bitbucket.microchip.com/scm/citd/tool-github-deploy.git'
+		DEPLOY_BRANCHES = 'master'
+		SEMVER_REGEX = '^(0|[1-9]\\d*)+\\.(0|[1-9]\\d*)+\\.(0|[1-9]\\d*)+$'
+	}
+	
+    options {
+        timestamps()
+        timeout(time: 20, unit: 'MINUTES')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+		stage('github-deploy') {
+			when {
+				not { 
+					changeRequest() 
+				}				
+				tag pattern: "${env.SEMVER_REGEX}", comparator: "REGEXP"				
+            }
+			steps {
+				container('python') {
+					script {
+						def githubObj = getGiHubInfo()					
+						def gitHubRepo = githubObj.repoName
+						
+						downloadDeployTool()
+						
+
+						withCredentials([usernamePassword(credentialsId: '8bit-examples.github.com', usernameVariable: 'USER_NAME', passwordVariable:'USER_PASS' )]) {					
+							execute("python tool-github-deploy/tool-github-deploy/tool-github-deploy.py -deploy=true -gpat=${USER_PASS} -dgid=${USER_NAME} -dburl=${env.SOURCE_URL} -dgurl=${env.GITHUB_URL} -dbranch=${env.DEPLOY_BRANCHES} -dtag=${env.TAG_NAME} -dmfd=true")	
+						}
+						
+						withCredentials([usernamePassword(credentialsId: '8bit-examples.github.com', usernameVariable: 'USER_NAME', passwordVariable:'USER_PASS' )]) {					
+							execute("python tool-github-deploy/tool-github-deploy/tool-github-deploy.py -rlo=true -gpat=${USER_PASS} -dgid=${USER_NAME} -rpn=${gitHubRepo} -rltv=${env.TAG_NAME} -rltt=${env.TAG_NAME} -dmfd=true")	
+						}
+						sendSuccessfulDeploymentEmail()
+					}
+				}
+			}
+		}
+    }
+
+    post {
+        failure {			
+            script {			
+				sendPipelineFailureEmail()
+            }
+        }
+    }
+}
+
+def execute(String cmd) {
+	if(isUnix()) {
+		sh cmd
+	} else {
+		bat cmd
+	}
+} 
+
+def getGiHubInfo()
+{
+	def githubObj = [
+		'ownerName':'',
+		'repoName':''
+		]
+	String[] splitURLString = "${env.GITHUB_URL}".split("/")
+	githubObj.repoName = splitURLString[splitURLString.size()-1]
+	githubObj.ownerName = splitURLString[splitURLString.size()-2]
+	return githubObj
+}
+
+def downloadDeployTool()
+{
+	execute("git clone ${env.DEPLOY_TOOL_URL}")	
+	execute("chmod +x tool-github-deploy/tool-github-deploy/tool-github-deploy.py")  
+}
+
+def sendSuccessfulDeploymentEmail () {  
+    mail to: "${params.NOTIFICATION_EMAIL}",
+    subject: "Successful GitHub Deployment: ${currentBuild.fullDisplayName}",
+    body: """
+	Successful GitHub Deployment. 
+	Build Log:- ${env.BUILD_URL}
+	"""
+}
+
+def sendPipelineFailureEmail () {
+    if (!"${env.CHANGE_AUTHOR_EMAIL}".equalsIgnoreCase("null")) {		  
+        mail to: "${env.CHANGE_AUTHOR_EMAIL}, ${params.NOTIFICATION_EMAIL}",
+        subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+        body: "Pipeline failure. ${env.BUILD_URL}"
+    } else {			  
+        mail to: "${params.NOTIFICATION_EMAIL}",
+        subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+        body: "Pipeline failure. ${env.BUILD_URL}"
+    }
+}
