@@ -1,13 +1,13 @@
 ![Microchip logo](images/microchip.png)
 
 # AVR128DB48 Current Spike Detection Mindi Simulation
-A new feature introduced in the AVR® DB family is the Analog Signal Conditioning (OPAMP) peripheral. In this example, the OPAMP is used together with an Analog Comparator (AC) to form a current spike detector. This Mindi simulation simulates the circuit described in the [AN3636 - AVR128DB48 Current Spike Detection](https://microchip.com/DS00003860) appnote. The simulation consists of a model of a DC fan, models of the AVR DB Op Amps and generic components representing the rest of the functionality of the AVR DB.
+A new feature introduced in the AVR® DB family is the Analog Signal Conditioning (OPAMP) peripheral. In this example, the OPAMP is used together with an Analog Comparator (AC) to form a current spike detector. This Mindi simulation simulates the circuit described in the [AN3860 - AVR128DB48 Current Spike Detection](https://microchip.com/DS00003860) appnote. The simulation consists of a model of a DC fan, models of the AVR DB Op Amps and generic components representing the rest of the functionality of the AVR DB.
 
 ![Circuit](images/Circuit.PNG)
 
 ## Related Documentation
 
-* [AN3636 - AVR128DB48 Current Spike Detection](https://microchip.com/DS00003860) 
+* [AN3860 - AVR128DB48 Current Spike Detection](https://microchip.com/DS00003860) 
 * [AVR128DB48 device page](https://www.microchip.com/wwwproducts/en/AVR128DB48)
 * [AVR128DB48 Curiosity Nano User Guide](https://www.microchip.com/DS50003037)
 
